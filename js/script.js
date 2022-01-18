@@ -51,7 +51,7 @@ function start() {
     const totalCells = columns * columns;
 
     const maxAttempts = totalCells - totalBombs;
-
+    let bombs = [];
 
     // GENERO UNA BOMBA
     const generateBombs = (totalBombs, totalNumber) => {
@@ -69,7 +69,7 @@ function start() {
     const generateGrid = (cellsNumber, cellsPerRow, bombs) => {
         for (let i = 1; i <= cellsNumber; i++) {
             const cell = createCell(i, cellsPerRow);
-            cell.addEventListener('click', (event) => onCellClick(event.target, bombs, i));
+            cell.addEventListener('click', onCellClick);
             grid.appendChild(cell);
         }
     }
@@ -86,11 +86,13 @@ function start() {
     }
 
     // Gestisco l'evento al click
-    function onCellClick(clickedCell, bombs, number) {
-        clickedCell.removeEventListener("click", onCellClick);
-        console.log('ciao');
+    function onCellClick(event) {
+        const cell = event.target;
+        cell.removeEventListener('click', onCellClick);
 
         // Controllo se è una bomba
+        let number = parseInt(cell.id);
+
         if (bombs.includes(number)) {
             gameOver(bombs, attempts, true);
         } else {
