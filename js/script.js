@@ -15,16 +15,7 @@ BONUS:
 
 //* FUNZIONI DA UTILIZZARE
 
-function createCell(cellNumber, cellsPerRow) {
-    const cell = document.createElement("div");
-    cell.className = "cell";
-    cell.id = cellNumber;
-    cell.innerText = cellNumber;
-    const wh = `calc(100% / ${cellsPerRow})`;
-    cell.style.height = wh;
-    cell.style.width = wh;
-    return cell;
-}
+
 
 // RECUPERO LA GRIGLIA
 const select = document.getElementById("choices");
@@ -61,14 +52,36 @@ function start() {
 
     const maxAttempts = totalCell - totalBombs;
 
+
+    // GENERO UNA BOMBA
     const generateBombs = (totalBombs, totalNumber) => {
         const bombs = [];
         while (bombs.length < totalBombs) { // il numero di bombe è inferiore a 16
             const randNumber = getRandomNumber(1, totalNumber);
-            if (!bombs.includes(randNumber)) {
+            if (!bombs.includes(randNumber)) { // Controllo se c'è nell'array di bombe
                 bombs.push(randNumber);
             }
         }
+        return bombs;
+    }
+
+    // GENERO LA GRIGLIA
+    const generateGrid = (cellsNumber, cellPerRow, bombs) => {
+        for (let i = 1; i < cellsNumber; i++) {
+            const cell = createCell(i, cellsPerRow);
+            cell.addEventListener('click', (event) => onCellClick(event.target, bombs, i));
+            grid.appendChild(cell);
+        }
+    }
+
+    function createCell(cellNumber, cellsPerRow) {
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.innerText = cellNumber;
+        const wh = `calc(100% / ${cellsPerRow})`;
+        cell.style.height = wh;
+        cell.style.width = wh;
+        return cell;
     }
 
 
@@ -93,7 +106,7 @@ function start() {
     const bombs = generateBombs(totalBombs, totalCells)
     console.log(bombs);
 
-    generateGrid(totalCells, cellsPerRow, bombs);
+    generateGrid(totalCells, columns, bombs);
 }
 
 button.addEventListener("click", () => start());
