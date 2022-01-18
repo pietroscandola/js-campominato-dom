@@ -19,8 +19,8 @@ body {
 }
 
 #grid {
-    height: 800px;
-    width: 800px;
+    height: 600px;
+    width: 600px;
     border: 1px solid black;
     margin: 100px auto;
     display: none;
