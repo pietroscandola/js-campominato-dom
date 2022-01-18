@@ -112,7 +112,17 @@ function start() {
         message.innerText = messageText;
 
         grid.appendChild(message);
+    }
 
+    const showBoms = (bombs) => {
+        const cells = document.querySelectorAll('.cell');
+        for (let i = 0; i < cells.length; i++) {
+            const cell = cells[i];
+            const cellNumber = parseInt(cell.innerText);
+            if (bombs.includes(cellNumber)) {
+                cell.classList.add('bomb');
+            }
+        }
     }
 
 
