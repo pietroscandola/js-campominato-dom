@@ -77,6 +77,7 @@ function start() {
     // CREO LA CELLA
     function createCell(cellNumber, cellsPerRow) {
         const cell = document.createElement("div");
+        cell.id = cellNumber;
         cell.className = "cell";
         cell.innerText = cellNumber;
         const wh = `calc(100% / ${cellsPerRow})`;
@@ -88,7 +89,7 @@ function start() {
     // Gestisco l'evento al click
     function onCellClick(event) {
         const cell = event.target;
-        cell.removeEventListener('click', onCellClick);
+        cell.removeEventListener("click", onCellClick);
 
         // Controllo se è una bomba
         let number = parseInt(cell.id);
@@ -96,7 +97,7 @@ function start() {
         if (bombs.includes(number)) {
             gameOver(bombs, attempts, true);
         } else {
-            clickedCell.classList.add("safe")
+            cell.classList.add("safe")
             attempts++;
             if (attempts === maxAttempts) {
                 gameOver(bombs, attempts, false);
@@ -139,7 +140,7 @@ function start() {
 
     // Esecuzione
 
-    const bombs = generateBombs(totalBombs, totalCells)
+    bombs = generateBombs(totalBombs, totalCells)
     console.log(bombs);
 
     generateGrid(totalCells, columns, bombs);
