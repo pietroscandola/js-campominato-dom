@@ -74,6 +74,7 @@ function start() {
         }
     }
 
+    // CREO LA CELLA
     function createCell(cellNumber, cellsPerRow) {
         const cell = document.createElement("div");
         cell.className = "cell";
@@ -82,6 +83,36 @@ function start() {
         cell.style.height = wh;
         cell.style.width = wh;
         return cell;
+    }
+
+    // Gestisco l'evento al click
+    const onCellClick = (clickedCell, bombs, number) => {
+        clickedCell.removeEventListener("click", onCellClick);
+
+        // Controllo se è una bomba
+        if (bombs.includes(number)) {
+            gameOver(bombs, attempts, true);
+        } else {
+            clickedCell.classList.add("safe")
+            attempts++;
+            if (attempts === maxAttempts) {
+                gameOver(bombs, attempts, false);
+            }
+        }
+    }
+
+    // FINE PARTITA
+    const gameOver = (bombs, attempts, hasLost) => {
+        showBoms(bombs);
+
+        const message = document.createElement('h2');
+        message.className = 'message';
+
+        const messageText = hasLost ? `HAI PERSO, RIPROVA (questo è il tuo punteggio ${attempts})` : `HAI VINTO!!!!!!!!`
+        message.innerText = messageText;
+
+        grid.appendChild(message);
+
     }
 
 
