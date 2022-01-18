@@ -15,6 +15,7 @@ BONUS:
 
 //* FUNZIONI DA UTILIZZARE
 
+const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 
 // RECUPERO LA GRIGLIA
@@ -30,7 +31,7 @@ function start() {
     grid.style.display = 'flex';
 
     // Preparo quello che mi serve per il gioco 
-    let attempt = 0;
+    let attempts = 0;
     const totalBombs = 16;
 
     let columns;
@@ -42,7 +43,6 @@ function start() {
         case "3":
             columns = 7;
             break;
-        case "1":
         default:
             columns = 10;
             break;
@@ -50,7 +50,7 @@ function start() {
 
     const totalCells = columns * columns;
 
-    const maxAttempts = totalCell - totalBombs;
+    const maxAttempts = totalCells - totalBombs;
 
 
     // GENERO UNA BOMBA
@@ -66,8 +66,8 @@ function start() {
     }
 
     // GENERO LA GRIGLIA
-    const generateGrid = (cellsNumber, cellPerRow, bombs) => {
-        for (let i = 1; i < cellsNumber; i++) {
+    const generateGrid = (cellsNumber, cellsPerRow, bombs) => {
+        for (let i = 1; i <= cellsNumber; i++) {
             const cell = createCell(i, cellsPerRow);
             cell.addEventListener('click', (event) => onCellClick(event.target, bombs, i));
             grid.appendChild(cell);
@@ -116,7 +116,7 @@ function start() {
 
     const showBoms = (bombs) => {
         const cells = document.querySelectorAll('.cell');
-        for (let i = 0; i < cells.length; i++) {
+        for (let i = 0; i < totalCells; i++) {
             const cell = cells[i];
             const cellNumber = parseInt(cell.innerText);
             if (bombs.includes(cellNumber)) {
@@ -127,21 +127,21 @@ function start() {
 
 
 
-    /*  const array = [];
-     for (let i = 0; i < totalCells; i++) {
-         let number = 0;
-         number += (i + 1);
-         const cell = createCell(number, columns);
-         cell.id = i + 1;
+    /*    const array = [];
+       for (let i = 0; i < totalCells; i++) {
+           let number = 0;
+           number += (i + 1);
+           const cell = createCell(number, columns);
+           cell.id = i + 1;
 
-         array.push(cell);
+           array.push(cell);
 
-         cell.addEventListener("click", () => {
-             cell.classList.toggle("clicked");
-         });
-         grid.appendChild(cell);
-     } */
-
+           cell.addEventListener("click", () => {
+               cell.classList.toggle("clicked");
+           });
+           grid.appendChild(cell);
+       }
+    */
     // Esecuzione
 
     const bombs = generateBombs(totalBombs, totalCells)

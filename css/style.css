@@ -32,6 +32,10 @@ body {
     cursor: pointer;
 }
 
-.clicked {
+.safe {
     background-color: dodgerblue;
+}
+
+.bomb {
+    background-color: red;
 }
