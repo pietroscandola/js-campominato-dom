@@ -86,8 +86,9 @@ function start() {
     }
 
     // Gestisco l'evento al click
-    const onCellClick = (clickedCell, bombs, number) => {
+    function onCellClick(clickedCell, bombs, number) {
         clickedCell.removeEventListener("click", onCellClick);
+        console.log('ciao');
 
         // Controllo se è una bomba
         if (bombs.includes(number)) {
@@ -103,6 +104,12 @@ function start() {
 
     // FINE PARTITA
     const gameOver = (bombs, attempts, hasLost) => {
+        const allCells = grid.querySelectorAll('.cell');
+
+        for (let i = 0; i < allCells.length; i++) {
+            allCells[i].removeEventListener('click', onCellClick);
+        }
+
         showBoms(bombs);
 
         const message = document.createElement('h2');
@@ -110,8 +117,10 @@ function start() {
 
         const messageText = hasLost ? `HAI PERSO, RIPROVA (questo è il tuo punteggio ${attempts})` : `HAI VINTO!!!!!!!!`
         message.innerText = messageText;
-
         grid.appendChild(message);
+
+
+
     }
 
     const showBoms = (bombs) => {
@@ -126,22 +135,6 @@ function start() {
     }
 
 
-
-    /*    const array = [];
-       for (let i = 0; i < totalCells; i++) {
-           let number = 0;
-           number += (i + 1);
-           const cell = createCell(number, columns);
-           cell.id = i + 1;
-
-           array.push(cell);
-
-           cell.addEventListener("click", () => {
-               cell.classList.toggle("clicked");
-           });
-           grid.appendChild(cell);
-       }
-    */
     // Esecuzione
 
     const bombs = generateBombs(totalBombs, totalCells)
